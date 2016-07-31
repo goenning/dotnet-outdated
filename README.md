@@ -28,3 +28,4 @@ Add `DotNetOutdated` to the `tools` section of your `project.json` file:
 - Extract logic away from Program.cs and write tests for it;
 - Don't warn when upper dependency is prerelease;
 - Check for `frameworks` specific dependencies;
+- Don't throw exception when `dependencies` key is missing inside project.json
