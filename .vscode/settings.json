@@ -1,0 +1,8 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+  "editor.tabSize": 4,
+  "files.exclude": {
+    "**/bin": true,
+    "**/obj": true
+  }
+}

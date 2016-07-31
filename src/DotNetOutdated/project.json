@@ -1,0 +1,28 @@
+{
+  "packOptions": {
+    "tags": [ "dotnet", "nuget", "dependencies", "outdated" ],
+    "owners": [ "oenning" ]
+  },
+  "version": "1.0.0-*",
+  "description": "Command line tool to check for outdated DotNet dependencies.",
+  "title": "DotNet Outdated",
+  "authors": [ "Guilherme Oenning" ],
+  "buildOptions": {
+    "outputName": "dotnet-outdated",
+    "warningsAsErrors": true,
+    "emitEntryPoint": true
+  },
+  "dependencies": {
+    "Microsoft.Extensions.CommandLineUtils": "1.0.0"
+  },
+  "frameworks": {
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.0.0"
+        }
+      }
+    }
+  }
+}
