@@ -1,6 +1,6 @@
 dotnet-outdated
-
 ===
+
 `dotnet-outdated` tool to check for outdated DotNet Core dependencies.
 
 ### How To Install
