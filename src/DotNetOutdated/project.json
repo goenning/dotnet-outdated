@@ -4,7 +4,7 @@
     "owners": [ "oenning" ]
   },
   "version": "1.0.0-*",
-  "description": "Command line tool to check for outdated DotNet dependencies.",
+  "description": "Command line tool to check for outdated DotNet Core dependencies.",
   "title": "DotNet Outdated",
   "authors": [ "Guilherme Oenning" ],
   "buildOptions": {
@@ -13,7 +13,8 @@
     "emitEntryPoint": true
   },
   "dependencies": {
-    "Microsoft.Extensions.CommandLineUtils": "1.0.0"
+    "NuGet.Versioning": "3.5.0-beta2-1484",
+    "Newtonsoft.Json": "9.0.1"
   },
   "frameworks": {
     "netcoreapp1.0": {
