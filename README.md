@@ -23,8 +23,8 @@ Add `DotNetOutdated` to the `tools` section of your `project.json` file:
 
 # To do list
 
-1) Mock NuGetClient during tests;
-2) Use real async HttpRequest;
-3) Extract logic away from Program.cs and write tests for it;
-4) Don't warn when upper dependency is prerelease;
-5) Check for `frameworks` specific dependencies;
+- Mock NuGetClient during tests;
+- Use real async HttpRequest;
+- Extract logic away from Program.cs and write tests for it;
+- Don't warn when upper dependency is prerelease;
+- Check for `frameworks` specific dependencies;
