@@ -15,11 +15,10 @@ namespace DotNetOutdated
             var checker = new OutdateChecker();
             var result = checker.Run(dependencies);
 
-            Console.WriteLine("Just sit tight... We are checking your project's dependencies.");
             if (result.Outdated.Count() > 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Oh no! You have outdate dependencies. Check it out: ");
+                Console.WriteLine("Oh no! You have outdate dependencies.");
                 foreach (var dependency in result.Outdated)
                 {
                     string message = $"- {dependency.Name} is currently {dependency.CurrentVersion}, but upper version is {dependency.UpperVersion}";

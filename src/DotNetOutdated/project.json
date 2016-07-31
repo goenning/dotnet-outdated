@@ -1,7 +1,9 @@
 {
   "packOptions": {
     "tags": [ "dotnet", "nuget", "dependencies", "outdated" ],
-    "owners": [ "oenning" ]
+    "owners": [ "oenning" ],
+    "licenseUrl": "https://raw.githubusercontent.com/goenning/dotnet-outdated/master/LICENSE",
+    "projectUrl": "https://github.com/goenning/dotnet-outdated"
   },
   "version": "1.0.0-*",
   "description": "Command line tool to check for outdated DotNet Core dependencies.",
