@@ -20,10 +20,3 @@ Add `DotNetOutdated` to the `tools` section of your `project.json` file:
 ### How To Use
 
     dotnet outdated
-
-# To do list
-
-- Make OutdateChecked async;
-- Extract logic away from Program.cs and write tests for it;
-- Check for `frameworks` specific dependencies;
-- Don't throw exception when `dependencies` key is missing inside project.json
