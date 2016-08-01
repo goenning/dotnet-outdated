@@ -11,7 +11,12 @@ namespace DotNetOutdated
     {
         public static void Main(string[] args)
         {
-            var dependencies = GetAllDependencies();
+            new Program().Execute(args);
+        }
+
+        public void Execute(string[] args)
+        {
+            var dependencies = this.GetAllDependencies("./project.json");
             var checker = new OutdateChecker();
             var result = checker.Run(dependencies);
 
@@ -21,7 +26,7 @@ namespace DotNetOutdated
                 Console.WriteLine("Oh no! You have outdate dependencies.");
                 foreach (var dependency in result.Outdated)
                 {
-                    string message = $"- {dependency.Name} is currently {dependency.CurrentVersion}, but upper version is {dependency.UpperVersion}";
+                    string message = $"- {dependency.Name} is currently {dependency.CurrentVersion}, but target version is {dependency.TargetVersion}";
                     Console.WriteLine(message);
                 }
             }
@@ -34,9 +39,9 @@ namespace DotNetOutdated
             Console.ResetColor();
         }
 
-        private static IEnumerable<Dependency> GetAllDependencies()
+        public IEnumerable<Dependency> GetAllDependencies(string filePath)
         {
-            var project = File.ReadAllText("./project.json");
+            var project = File.ReadAllText(filePath);
             JObject json = JObject.Parse(project);
 
             var dependencies = json["dependencies"].Value<JObject>();

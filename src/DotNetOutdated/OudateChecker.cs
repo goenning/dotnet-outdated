@@ -16,9 +16,9 @@ namespace DotNetOutdated
             foreach (var dependency in dependencies ?? new Dependency[0])
             {
                 var info = this.client.GetPackageInfo(dependency.Name).Result;
-                if (dependency.CurrentVersion < info.UpperVersion)
+                if (dependency.CurrentVersion < info.StableVersion)
                 {
-                    dependency.UpperVersion = info.UpperVersion;
+                    dependency.TargetVersion = info.StableVersion;
                     result.AddOutdated(dependency);
                 }
             }

@@ -6,7 +6,12 @@ namespace DotNetOutdated
     {
         public string Name { get; private set; }
         public SemanticVersion CurrentVersion { get; private set; }
-        public SemanticVersion UpperVersion { get; set; }
+        public SemanticVersion TargetVersion { get; set; }
+
+        public Dependency(string name, string current)
+            : this(name, SemanticVersion.Parse(current))
+        {
+        }
 
         public Dependency(string name, SemanticVersion current)
         {
