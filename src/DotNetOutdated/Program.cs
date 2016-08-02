@@ -1,9 +1,5 @@
 using System;
-using System.IO;
 using System.Linq;
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
-using NuGet.Versioning;
 
 namespace DotNetOutdated
 {
@@ -14,7 +10,7 @@ namespace DotNetOutdated
             var parser = new ProjectParser();
             var checker = new OutdateChecker();
             var dependencies = parser.GetAllDependencies("./project.json");
-            var result = checker.Run(dependencies);
+            var result = checker.Run(dependencies).Result;
 
             if (result.Outdated.Count() > 0)
             {

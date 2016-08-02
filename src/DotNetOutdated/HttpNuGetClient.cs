@@ -46,8 +46,7 @@ namespace DotNetOutdated
                 } 
                 catch { }
             }
-            //var lower = SemanticVersion.Parse(json["items"][0]["lower"].ToString());
-            //var upper = SemanticVersion.Parse(json["items"][0]["upper"].ToString());
+
             return new PackageInfo(packageName, lower, upper, stable);
         }
     }

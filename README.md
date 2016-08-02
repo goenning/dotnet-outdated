@@ -11,7 +11,7 @@ Add `DotNetOutdated` to the `tools` section of your `project.json` file:
 {
 ...
   "tools": {
-    "DotNetOutdated": "1.1.0"
+    "DotNetOutdated": "1.2.0"
   }
 ...
 }

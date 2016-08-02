@@ -1,5 +1,4 @@
 using System.Linq;
-using NuGet.Versioning;
 using Xunit;
 
 namespace DotNetOutdated.Test
@@ -18,34 +17,34 @@ namespace DotNetOutdated.Test
         }
 
         [Fact]
-        public void EmptyDependencies()
+        public async void EmptyDependencies()
         {
-            var result = this.checker.Run(new Dependency[0]);
+            var result = await this.checker.Run(new Dependency[0]);
             Assert.Equal(0, result.Outdated.Count());
         }
 
         [Fact]
-        public void SingleOutdatedDependency()
+        public async void SingleOutdatedDependency()
         {
-            var result = this.checker.Run(new Dependency[] {
+            var result = await this.checker.Run(new Dependency[] {
                 new Dependency("DotNetOutdated", "0.0.1")
             });
             Assert.Equal(1, result.Outdated.Count());
         }
 
         [Fact]
-        public void SingleUpToDateDependency()
+        public async void SingleUpToDateDependency()
         {
-            var result = this.checker.Run(new Dependency[] {
+            var result = await this.checker.Run(new Dependency[] {
                 new Dependency("SharpSapRfc", "2.0.10")
             });
             Assert.Equal(0, result.Outdated.Count());
         }
 
         [Fact]
-        public void ShouldNotWarnWhenUpperVersionIsPrereleaseDependency()
+        public async void ShouldNotWarnWhenUpperVersionIsPrereleaseDependency()
         {
-            var result = this.checker.Run(new Dependency[] {
+            var result = await this.checker.Run(new Dependency[] {
                 new Dependency("SomeOtherPackage", "2.1.0")
             });
             Assert.Equal(0, result.Outdated.Count());

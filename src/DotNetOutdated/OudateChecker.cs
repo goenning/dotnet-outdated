@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DotNetOutdated
 {
@@ -10,15 +12,19 @@ namespace DotNetOutdated
             this.client = client ?? new HttpNuGetClient();
         }
 
-        public CheckResult Run(IEnumerable<Dependency> dependencies)
+        public async Task<CheckResult> Run(IEnumerable<Dependency> dependencies)
         {
+            var requests = dependencies.Select(x => this.client.GetPackageInfo(x.Name));
+
+            var responses = await Task.WhenAll(requests);
+
             var result = new CheckResult();
-            foreach (var dependency in dependencies ?? new Dependency[0])
+            for (int i = 0; i < responses.Length; i++)
             {
-                var info = this.client.GetPackageInfo(dependency.Name).Result;
-                if (dependency.CurrentVersion < info.StableVersion)
+                var dependency = dependencies.ElementAt(i);
+                if (dependency.CurrentVersion < responses[i].StableVersion)
                 {
-                    dependency.TargetVersion = info.StableVersion;
+                    dependency.TargetVersion = responses[i].StableVersion;
                     result.AddOutdated(dependency);
                 }
             }
