@@ -1,7 +1,7 @@
 dotnet-outdated
 ===
 
-`dotnet-outdated` tool to check for outdated DotNet Core dependencies.
+`dotnet-outdated` is a tool to check for outdated .NET Core dependencies.
 
 ### How To Install
 
@@ -11,7 +11,7 @@ Add `DotNetOutdated` to the `tools` section of your `project.json` file:
 {
 ...
   "tools": {
-    "DotNetOutdated": "1.2.0"
+    "DotNetOutdated": "1.2.1"
   }
 ...
 }
@@ -19,4 +19,9 @@ Add `DotNetOutdated` to the `tools` section of your `project.json` file:
 
 ### How To Use
 
-    dotnet outdated
+```
+dotnet outdated [options]
+
+Options:
+  -pre          Check for prereleases versions
+```

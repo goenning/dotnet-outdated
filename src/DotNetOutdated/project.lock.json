@@ -359,7 +359,7 @@
           "lib/netstandard1.0/Newtonsoft.Json.dll": {}
         }
       },
-      "NuGet.Versioning/3.5.0-beta2-1484": {
+      "NuGet.Versioning/3.5.0-rc1-final": {
         "type": "package",
         "dependencies": {
           "NETStandard.Library": "1.6.0"
@@ -2480,12 +2480,12 @@
         "tools/install.ps1"
       ]
     },
-    "NuGet.Versioning/3.5.0-beta2-1484": {
-      "sha512": "Stok+SI5lWxOkTgZZM7jT4xuAZogm5+j85mKJeHSXb8o0OAbB+qDX9jkdM2wIEnjoR8R29J0nQYwk2Kl2lWFpA==",
+    "NuGet.Versioning/3.5.0-rc1-final": {
+      "sha512": "Xo75gAqzI83opGrlFQYq4XK2Ee61b8vFh4orO82EgIUfQ09YyoVA9JIV7A4BdUz5NMogEINpnR1X/2IjS/5lAw==",
       "type": "package",
-      "path": "NuGet.Versioning/3.5.0-beta2-1484",
+      "path": "NuGet.Versioning/3.5.0-rc1-final",
       "files": [
-        "NuGet.Versioning.3.5.0-beta2-1484.nupkg.sha512",
+        "NuGet.Versioning.3.5.0-rc1-final.nupkg.sha512",
         "NuGet.Versioning.nuspec",
         "lib/net45/NuGet.Versioning.dll",
         "lib/net45/NuGet.Versioning.xml",
@@ -6792,7 +6792,7 @@
   "projectFileDependencyGroups": {
     "": [
       "Newtonsoft.Json >= 9.0.1",
-      "NuGet.Versioning >= 3.5.0-beta2-1484"
+      "NuGet.Versioning >= 3.5.0-rc1-final"
     ],
     ".NETCoreApp,Version=v1.0": [
       "Microsoft.NETCore.App >= 1.0.0"
