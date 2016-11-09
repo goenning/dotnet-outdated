@@ -15,7 +15,7 @@ namespace DotNetOutdated
             if (result.Outdated.Count() > 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Oh no! You have outdate dependencies.");
+                Console.WriteLine("Oh no! You have outdated dependencies.");
                 foreach (var dependency in result.Outdated)
                 {
                     string message = $"- {dependency.Name} is currently {dependency.CurrentVersion}, but stable version is {dependency.TargetVersion}";

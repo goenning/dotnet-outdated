@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -26,6 +27,7 @@ namespace DotNetOutdated
             SemanticVersion lower = null;
             SemanticVersion upper = null;
             SemanticVersion stable = null;
+            var versions = new List<SemanticVersion>();
 
             var items = json["items"][0]["items"];
             foreach(var item in items) 
@@ -37,6 +39,8 @@ namespace DotNetOutdated
                 try 
                 {
                     SemanticVersion version = SemanticVersion.Parse(item["catalogEntry"]["version"].ToString());
+                    versions.Add(version);
+
                     if (lower == null)
                         lower = version;
 
@@ -46,8 +50,9 @@ namespace DotNetOutdated
                 } 
                 catch { }
             }
-
-            return new PackageInfo(packageName, lower, upper, stable);
+            
+            versions.Reverse();
+            return new PackageInfo(packageName, lower, upper, stable, versions);
         }
     }
 }

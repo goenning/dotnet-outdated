@@ -1,11 +1,6 @@
-using NuGet.Versioning;
 using Xunit;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using Xunit.Extensions;
 
 namespace DotNetOutdated.Test
 {
