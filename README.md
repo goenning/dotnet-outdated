@@ -25,3 +25,7 @@ dotnet outdated [options]
 Options:
   -pre          Check for prereleases versions
 ```
+
+### An example of what to expect
+
+![](demo.png)

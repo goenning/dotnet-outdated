@@ -2480,7 +2480,7 @@
           "lib/netstandard1.1/xunit.runner.utility.dotnet.dll": {}
         }
       },
-      "DotNetOutdated/1.2.0": {
+      "DotNetOutdated/1.2.1": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v1.0",
         "dependencies": {
@@ -7477,7 +7477,7 @@
         "xunit.runner.utility.nuspec"
       ]
     },
-    "DotNetOutdated/1.2.0": {
+    "DotNetOutdated/1.2.1": {
       "type": "project",
       "path": "../../src/DotNetOutdated/project.json",
       "msbuildProject": "../../src/DotNetOutdated/DotNetOutdated.xproj"
