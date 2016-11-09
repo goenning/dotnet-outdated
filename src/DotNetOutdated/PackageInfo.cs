@@ -12,18 +12,27 @@ namespace DotNetOutdated
         public SemanticVersion StableVersion { get; private set; }
         public IEnumerable<SemanticVersion> Versions { get; private set; }
 
-        public PackageInfo(string name, string lower, string upper, string stable, IEnumerable<SemanticVersion> versions = null)
-            : this(name, SemanticVersion.Parse(lower), SemanticVersion.Parse(upper), SemanticVersion.Parse(stable), versions)
+        public PackageInfo(string name, IEnumerable<string> versions)
+            : this(name, versions.Select(v => SemanticVersion.Parse(v)))
         {
+            
         }
 
-        public PackageInfo(string name, SemanticVersion lower, SemanticVersion upper, SemanticVersion stable, IEnumerable<SemanticVersion> versions = null)
+        public PackageInfo(string name, IEnumerable<SemanticVersion> versions)
         {
             this.Name = name;
-            this.LowerVersion = lower;
-            this.UpperVersion = upper;
-            this.StableVersion = stable;
-            this.Versions = versions ?? Enumerable.Empty<SemanticVersion>();
+            this.Versions = versions;
+
+            foreach(var version in versions)
+            {
+                if (this.UpperVersion == null)
+                    this.UpperVersion = version;
+
+                if (!version.IsPrerelease && this.StableVersion == null)
+                    this.StableVersion = version;
+
+                this.LowerVersion = version;
+            }
         }
     }
 }

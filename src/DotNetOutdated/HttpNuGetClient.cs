@@ -24,9 +24,6 @@ namespace DotNetOutdated
 
         public PackageInfo ParseJson(string packageName, JObject json)
         {
-            SemanticVersion lower = null;
-            SemanticVersion upper = null;
-            SemanticVersion stable = null;
             var versions = new List<SemanticVersion>();
 
             var items = json["items"][0]["items"];
@@ -40,19 +37,12 @@ namespace DotNetOutdated
                 {
                     SemanticVersion version = SemanticVersion.Parse(item["catalogEntry"]["version"].ToString());
                     versions.Add(version);
-
-                    if (lower == null)
-                        lower = version;
-
-                    if (!version.IsPrerelease)
-                        stable = version;
-                    upper = version;
                 } 
                 catch { }
             }
-            
+
             versions.Reverse();
-            return new PackageInfo(packageName, lower, upper, stable, versions);
+            return new PackageInfo(packageName, versions);
         }
     }
 }

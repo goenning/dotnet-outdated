@@ -5,14 +5,18 @@ namespace DotNetOutdated.Test
 {
     public class OutdateCheckerTest
     {
+        private PackageInfo DotNetOutdatedPackage = new PackageInfo("DotNetOutdated", new string[] { "1.0.0", "0.0.1" });
+        private PackageInfo SharpSapRfcPackage = new PackageInfo("SharpSapRfc", new string[] { "2.0.10", "1.0.0" });
+        private PackageInfo SomeOtherPackagePackage = new PackageInfo("SomeOtherPackage", new string[] { "3.0.0-rc2", "2.1.0", "1.0.0" });
+
         private OutdateChecker checker;
         private StubNuGetClient client;
         public OutdateCheckerTest()
         {
             this.client = new StubNuGetClient();
-            this.client.AddPackageInfo(new PackageInfo("DotNetOutdated","0.0.1", "1.0.0", "1.0.0"));
-            this.client.AddPackageInfo(new PackageInfo("SharpSapRfc", "1.0.0", "2.0.10", "2.0.10"));
-            this.client.AddPackageInfo(new PackageInfo("SomeOtherPackage", "1.0.0", "3.0.0-rc2", "2.1.0"));
+            this.client.AddPackageInfo(this.DotNetOutdatedPackage);
+            this.client.AddPackageInfo(this.SharpSapRfcPackage);
+            this.client.AddPackageInfo(this.SomeOtherPackagePackage);
             this.checker = new OutdateChecker(this.client);
         }
 
