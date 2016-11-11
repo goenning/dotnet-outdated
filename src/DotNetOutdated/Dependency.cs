@@ -7,7 +7,6 @@ namespace DotNetOutdated
     {
         public string Name { get; private set; }
         public SemanticVersion CurrentVersion { get; private set; }
-        public SemanticVersion TargetVersion { get; set; }
 
         public Dependency(string name, string current)
             : this(name, SemanticVersion.Parse(current))
@@ -25,8 +24,7 @@ namespace DotNetOutdated
             if(other == null) return false;
 
             return Name == other.Name &&
-                CurrentVersion == other.CurrentVersion &&
-                TargetVersion == other.TargetVersion;
+                CurrentVersion == other.CurrentVersion;
         }
         
         public override bool Equals(object obj)

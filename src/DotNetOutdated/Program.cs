@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DotNetOutdated
 {
@@ -7,29 +9,40 @@ namespace DotNetOutdated
     {
         public static void Main(string[] args)
         {
-            var allowPre = args.Any(a => a.Equals("-pre"));
             var parser = new ProjectParser();
-            var checker = new OutdateChecker();
             var dependencies = parser.GetAllDependencies("./project.json");
-            var result = checker.Run(dependencies, allowPre).Result;
+            var client = new HttpNuGetClient();  
+            var requests = dependencies.Select(x => client.GetPackageInfo(x.Name));
+            var responses = Task.WhenAll(requests).Result;
+            var data = new List<DependencyStatus>();
 
-            if (result.Outdated.Count() > 0)
+            for (int i = 0; i < responses.Length; i++)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Oh no! You have outdated dependencies.");
-                foreach (var dependency in result.Outdated)
-                {
-                    string name = dependency.TargetVersion.IsPrerelease ? "latest (pre)" : "stable";
-                    string message = $"- {dependency.Name} is currently {dependency.CurrentVersion}, but {name} version is {dependency.TargetVersion}";
-                    Console.WriteLine(message);
-                }
-            }
-            else 
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Good Job! Your project's dependencies are all up to date!");
+                var dependency = dependencies.ElementAt(i);
+                var package = responses[i];
+                var status = DependencyStatus.Check(dependency, package);
+
+                data.Add(status);
             }
 
+            data.ToStringTable(
+                new[] { "Package", "Current", "Wanted", "Stable", "Latest"},
+                r => {
+                    if (r.Dependency.CurrentVersion < r.WantedVersion)
+                        return ConsoleColor.Yellow;
+
+                    if (r.Dependency.CurrentVersion == r.WantedVersion &&
+                        r.Dependency.CurrentVersion < r.StableVersion)
+                        return ConsoleColor.Red;
+
+                    return ConsoleColor.White;
+                }, 
+                a => a.Package.Name, 
+                a => a.Dependency.CurrentVersion, 
+                a => a.WantedVersion, 
+                a => a.StableVersion, 
+                a => a.LatestVersion
+            );
             Console.ResetColor();
         }
     }

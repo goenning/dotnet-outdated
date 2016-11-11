@@ -9,16 +9,13 @@ namespace DotNetOutdated.Test
     public class HttpNuGetClientTest
     {
         [Theory, MemberData("TestData")]
-        public void ShouldParseNuGetResponse(string packageName, string lower, string upper, string stable, IEnumerable<SemanticVersion> versions)
+        public void ShouldParseNuGetResponse(string packageName, IEnumerable<SemanticVersion> versions)
         {
             var client = new HttpNuGetClient();
             var content = File.ReadAllText($"./nuget-responses/{packageName}.json");
             var json = JObject.Parse(content);
             var package = client.ParseJson(packageName, json);
             Assert.Equal(packageName, package.Name);
-            Assert.Equal(SemanticVersion.Parse(lower), package.LowerVersion);
-            Assert.Equal(SemanticVersion.Parse(upper), package.UpperVersion);
-            Assert.Equal(SemanticVersion.Parse(stable), package.StableVersion);
             Assert.Equal(versions, package.Versions);
         }
         public static IEnumerable<object[]> TestData
@@ -29,9 +26,6 @@ namespace DotNetOutdated.Test
                 {
                     new object[] { 
                         "SharpSapRfc", 
-                        "2.0.0", 
-                        "2.0.10", 
-                        "2.0.10",
                         new List<SemanticVersion> {
                             SemanticVersion.Parse("2.0.10"),
                             SemanticVersion.Parse("2.0.9"),
@@ -46,9 +40,6 @@ namespace DotNetOutdated.Test
                     },
                     new object[] { 
                         "NLog", 
-                        "2.1.0", 
-                        "4.4.0-betaV15", 
-                        "4.3.6",
                         new List<SemanticVersion> {
                             SemanticVersion.Parse("4.4.0-betaV15"),	
                             SemanticVersion.Parse("4.4.0-betaV14"),	
