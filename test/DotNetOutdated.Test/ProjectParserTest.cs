@@ -9,8 +9,7 @@ namespace DotNetOutdated.Test
         [Theory, MemberData("TestData")]
         public void ShouldGetAllDependencies(string fileName, Dependency[] expected)
         {
-            var parser = new ProjectParser();
-            var dependencies = parser.GetAllDependencies($"./sample-projects/{fileName}.json");
+            var dependencies = ProjectParser.GetAllDependencies($"./sample-projects/{fileName}.json");
             Assert.Equal(expected, dependencies.ToArray());
         }
 

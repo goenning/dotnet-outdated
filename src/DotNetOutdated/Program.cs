@@ -9,8 +9,7 @@ namespace DotNetOutdated
     {
         public static void Main(string[] args)
         {
-            var parser = new ProjectParser();
-            var dependencies = parser.GetAllDependencies("./project.json");
+            var dependencies = ProjectParser.GetAllDependencies("./project.json");
             var client = new HttpNuGetClient();  
             var requests = dependencies.Select(x => client.GetPackageInfo(x.Name));
             var responses = Task.WhenAll(requests).Result;

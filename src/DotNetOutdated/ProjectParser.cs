@@ -1,15 +1,12 @@
-using System;
 using System.IO;
-using System.Linq;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using NuGet.Versioning;
 
 namespace DotNetOutdated
 {
-    public class ProjectParser
+    public static class ProjectParser
     {
-        public IEnumerable<Dependency> GetAllDependencies(string filePath)
+        public static IEnumerable<Dependency> GetAllDependencies(string filePath)
         {
             HashSet<Dependency> all = new HashSet<Dependency>();
             var project = File.ReadAllText(filePath);
@@ -57,7 +54,7 @@ namespace DotNetOutdated
             return all;
         }
 
-        private Dependency Extract(JProperty prop)
+        private static Dependency Extract(JProperty prop)
         {
             string version = null;
             if (prop.Value.Type == JTokenType.String) 

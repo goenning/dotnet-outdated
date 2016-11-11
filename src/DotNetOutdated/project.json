@@ -5,7 +5,7 @@
     "licenseUrl": "https://raw.githubusercontent.com/goenning/dotnet-outdated/master/LICENSE",
     "projectUrl": "https://github.com/goenning/dotnet-outdated"
   },
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Command line tool to check for outdated dependencies within your project.",
   "title": "DotNet Outdated",
   "authors": [ "Guilherme Oenning" ],

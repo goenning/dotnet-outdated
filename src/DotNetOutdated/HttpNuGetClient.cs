@@ -1,48 +1,20 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using NuGet.Versioning;
 
 namespace DotNetOutdated
 {
-    public class HttpNuGetClient : INuGetClient
+    public class HttpNuGetClient : NuGetClient
     {
-        public async Task<PackageInfo> GetPackageInfo(string packageName)
+        protected override async Task<JObject> GetResource(string name)
         {
-            var request = WebRequest.Create($"https://api.nuget.org/v3/registration1/{packageName.ToLower()}/index.json");
+            var request = WebRequest.Create($"https://api.nuget.org/v3/registration1/{name}");
             var ws = await request.GetResponseAsync();
-
             using (var sr = new StreamReader(ws.GetResponseStream()))
             {
-                JObject json = JObject.Parse(sr.ReadToEnd());
-                return ParseJson(packageName, json);
+                return JObject.Parse(sr.ReadToEnd());
             }
-        }
-
-        public PackageInfo ParseJson(string packageName, JObject json)
-        {
-            var versions = new List<SemanticVersion>();
-
-            var items = json["items"][0]["items"];
-            foreach(var item in items) 
-            {
-                bool listed = Convert.ToBoolean(item["catalogEntry"]["listed"].ToString());
-                if (!listed)
-                    continue;
-
-                try 
-                {
-                    SemanticVersion version = SemanticVersion.Parse(item["catalogEntry"]["version"].ToString());
-                    versions.Add(version);
-                } 
-                catch { }
-            }
-
-            versions.Reverse();
-            return new PackageInfo(packageName, versions);
         }
     }
 }
