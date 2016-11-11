@@ -42,7 +42,7 @@ namespace DotNetOutdated
                 colors[rowIndex - 1] = colorSelector.Invoke(values[rowIndex - 1]);
                 for (int colIndex = 0; colIndex < arrValues.GetLength(1); colIndex++)
                 {
-                    arrValues[rowIndex, colIndex] = valueSelectors[colIndex].Invoke(values[rowIndex - 1]).ToString();
+                    arrValues[rowIndex, colIndex] = Convert.ToString(valueSelectors[colIndex].Invoke(values[rowIndex - 1]));
                 }
             }
 
