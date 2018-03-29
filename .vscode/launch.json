@@ -6,17 +6,18 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/src/DotNetOutdated/bin/Debug/netcoreapp1.0/dotnet-outdated.dll",
+            "program": "${workspaceFolder}/src/DotNetOutdated/bin/Debug/netcoreapp2.0/dotnet-outdated.dll",
             "args": [],
-            "cwd": "${workspaceRoot}",
-            "externalConsole": false,
-            "stopAtEntry": false
+            "cwd": "${workspaceFolder}/src/DotNetOutdated",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnFirstSessionStart",
+            "console": "externalTerminal"
         },
         {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",
-            "processId": "${command.pickProcess}"
+            "processId": "${command:pickProcess}"
         }
     ]
 }

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Command line tool to check for outdated dependencies within your project.</Description>
+    <AssemblyTitle>DotNet Outdated</AssemblyTitle>
+    <VersionPrefix>1.2.4</VersionPrefix>
+    <Authors>Guilherme Oenning</Authors>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AssemblyName>dotnet-outdated</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>DotNetOutdated</PackageId>
+    <PackageTags>dotnet;nuget;dependencies;outdated</PackageTags>
+    <PackageProjectUrl>https://github.com/goenning/dotnet-outdated</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/goenning/dotnet-outdated/master/LICENSE</PackageLicenseUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NuGet.Versioning" Version="3.5.0-rc1-final" />
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+  </ItemGroup>
+
+</Project>
