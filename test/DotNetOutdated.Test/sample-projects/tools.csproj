@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp1.0</TargetFrameworks>
+    <AssemblyName>sample-projects</AssemblyName>
+    <PackageId>sample-projects</PackageId>
+    <RuntimeFrameworkVersion>1.0.4</RuntimeFrameworkVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="DotNetOutdated" Version="1.2.4" />
+  </ItemGroup>
+
+</Project>

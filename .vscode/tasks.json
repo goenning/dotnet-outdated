@@ -21,7 +21,7 @@
             "type": "process",
             "args": [
                 "test",
-                "${workspaceFolder}/test/DotNetOutdated"
+                "${workspaceFolder}/test/DotNetOutdated.Test/DotNetOutdated.Test.csproj"
             ],
             "problemMatcher": "$msCompile",
             "group": {

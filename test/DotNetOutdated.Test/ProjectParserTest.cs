@@ -9,7 +9,7 @@ namespace DotNetOutdated.Test
         [Theory, MemberData("TestData")]
         public void ShouldGetAllDependencies(string fileName, Dependency[] expected)
         {
-            var dependencies = ProjectParser.GetAllDependencies($"./sample-projects/{fileName}.json");
+            var dependencies = ProjectParser.GetAllDependencies($"./sample-projects/{fileName}.csproj");
             Assert.Equal(expected, dependencies.ToArray());
         }
 
@@ -19,7 +19,6 @@ namespace DotNetOutdated.Test
             {
                 return new[]
                 {
-                    new object[] { "empty", new Dependency[0] },
                     new object[] { "no-dependencies", new Dependency[0] },
                     new object[] 
                     { 
@@ -30,15 +29,6 @@ namespace DotNetOutdated.Test
                     { 
                         "tools", 
                         new Dependency[] { new Dependency("DotNetOutdated", "1.0.0") } 
-                    },
-                    new object[] 
-                    { 
-                        "framework-dependencies", 
-                        new Dependency[] { 
-                            new Dependency("SomePackage", "3.10.5"),
-                            new Dependency("AnotherPackage", "2.0.0") ,
-                            new Dependency("Microsoft.NETCore.App", "1.0.0") 
-                        } 
                     },
                     new object[] 
                     { 
