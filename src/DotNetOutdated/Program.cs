@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,7 +10,15 @@ namespace DotNetOutdated
     {
         public static void Main(string[] args)
         {
-            var dependencies = ProjectParser.GetAllDependencies("./project.json");
+            string firstProjectFile = Directory.EnumerateFiles("./").FirstOrDefault(x => Path.GetExtension(x) == ".csproj");
+
+            if (firstProjectFile == null)
+            {
+                Console.WriteLine("No project file found");
+                return;
+            }
+
+            var dependencies = ProjectParser.GetAllDependencies(firstProjectFile);
             var client = new HttpNuGetClient();  
             var requests = dependencies.Select(x => client.GetPackageInfo(x.Name));
             var responses = Task.WhenAll(requests).Result;
