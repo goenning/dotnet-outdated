@@ -5,16 +5,10 @@ dotnet-outdated
 
 ### How To Install
 
-Add `DotNetOutdated` to the `tools` section of your `project.json` file:
+Add `DotNetOutdated` as `DotNetCliToolReference` to your `.csproj` file:
 
 ```
-{
-...
-  "tools": {
-    "DotNetOutdated": "1.2.4"
-  }
-...
-}
+<DotNetCliToolReference Include="DotNetOutdated" Version="x.x.x" />
 ```
 
 ### How To Use
