@@ -42,11 +42,13 @@ namespace DotNetOutdated
 
         private static Dependency Extract(XElement element)
         {
-            string name = element.Attribute("Include").Value;
+            string name = element.Attribute("Include")?.Value;
             string version = element.Attribute("Version")?.Value;
 
-            if (version != null)
+            if (name != null && version != null)
+            {
                 return new Dependency(name, version);
+            }
 
             return null;
         }
