@@ -1,6 +1,7 @@
 using System.IO;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace DotNetOutdated
 {
@@ -8,62 +9,46 @@ namespace DotNetOutdated
     {
         public static IEnumerable<Dependency> GetAllDependencies(string filePath)
         {
-            HashSet<Dependency> all = new HashSet<Dependency>();
+            var all = new HashSet<Dependency>();
             var project = File.ReadAllText(filePath);
-            JObject json = JObject.Parse(project);
+            var document = XDocument.Parse(project);
 
-            var dependencies = json["dependencies"];
-            if (dependencies != null) 
+            var dependencies = document.Descendants("PackageReference");
+
+            foreach (var package in dependencies)
             {
-                foreach(var prop in dependencies.Value<JObject>().Properties())
+                Dependency dependency = Extract(package);
+                
+                if (dependency != null)
                 {
-                    var dependency = Extract(prop);
-                    if (dependency != null)
-                        all.Add(dependency);
-                } 
+                    all.Add(dependency);
+                }
             }
 
-            dependencies = json["tools"];
-            if (dependencies != null) 
-            {
-                foreach(var prop in dependencies.Value<JObject>().Properties())
-                {
-                    var dependency = Extract(prop);
-                    if (dependency != null)
-                        all.Add(dependency);
-                } 
-            }
+            dependencies = document.Descendants("DotNetCliToolReference");
 
-            var frameworks = json["frameworks"];
-            if (frameworks != null) 
+            foreach (var package in dependencies)
             {
-                foreach(var framework in frameworks.Value<JObject>().Properties())
+                Dependency dependency = Extract(package);
+                
+                if (dependency != null)
                 {
-                    if (framework.Value["dependencies"] != null) 
-                    {
-                        foreach(var prop in framework.Value["dependencies"].Value<JObject>().Properties())
-                        {
-                            var dependency = Extract(prop);
-                            if (dependency != null)
-                                all.Add(dependency);
-                        } 
-                    }
-                } 
+                    all.Add(dependency);
+                }
             }
 
             return all;
         }
 
-        private static Dependency Extract(JProperty prop)
+        private static Dependency Extract(XElement element)
         {
-            string version = null;
-            if (prop.Value.Type == JTokenType.String) 
-                version = prop.Value.ToString();
-            else if (prop.Value["version"] != null)
-                version = prop.Value["version"].ToString();
+            string name = element.Attribute("Include")?.Value;
+            string version = element.Attribute("Version")?.Value;
 
-            if (version != null)
-                return new Dependency(prop.Name, version);
+            if (name != null && version != null)
+            {
+                return new Dependency(name, version);
+            }
 
             return null;
         }
