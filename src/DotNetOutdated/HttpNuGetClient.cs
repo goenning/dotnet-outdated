@@ -9,7 +9,7 @@ namespace DotNetOutdated
     {
         protected override async Task<JObject> GetResource(string name)
         {
-            var request = WebRequest.Create($"https://api.nuget.org/v3/registration1/{name}");
+            var request = WebRequest.Create($"https://api.nuget.org/v3/registration3/{name}");
             var ws = await request.GetResponseAsync();
             using (var sr = new StreamReader(ws.GetResponseStream()))
             {

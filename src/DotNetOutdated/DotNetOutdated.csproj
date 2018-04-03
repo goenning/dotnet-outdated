@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>Command line tool to check for outdated dependencies within your project.</Description>
     <AssemblyTitle>DotNet Outdated</AssemblyTitle>
-    <VersionPrefix>1.2.4</VersionPrefix>
+    <VersionPrefix>2.0.0</VersionPrefix>
     <Authors>Guilherme Oenning</Authors>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="NuGet.Versioning" Version="4.6.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
 </Project>

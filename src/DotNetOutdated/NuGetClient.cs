@@ -17,9 +17,13 @@ namespace DotNetOutdated
             var versions = new List<SemanticVersion>();
 
             var items = json["items"].AsJEnumerable();
-            if (items.Count() == 1)
-                versions.AddRange(this.ExtractVersions(items.ElementAt(0)["items"]));
-            else 
+            if (items[0]["items"] != null)
+            {
+                foreach (var item in items) {
+                    versions.AddRange(this.ExtractVersions(item["items"]));
+                }
+            }
+            else
             {
                 var requests = items.Select(i => {
                     var id = i["@id"].ToString();
