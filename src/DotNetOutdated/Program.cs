@@ -30,7 +30,10 @@ namespace DotNetOutdated
                 var package = responses[i];
                 var status = DependencyStatus.Check(dependency, package);
 
-                data.Add(status);
+                if (status.LatestVersion > status.Dependency.CurrentVersion)
+                {
+                    data.Add(status);
+                }
             }
 
             data.ToStringTable(
