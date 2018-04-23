@@ -14,6 +14,11 @@ namespace DotNetOutdated
         public async Task<PackageInfo> GetPackageInfo(string packageName)
         {
             var json = await this.GetResource($"{packageName.ToLower()}/index.json");
+
+            if (json == null)
+            {
+                return null;
+            }
             var versions = new List<SemanticVersion>();
 
             var items = json["items"].AsJEnumerable();

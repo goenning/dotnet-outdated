@@ -6,6 +6,17 @@ namespace DotNetOutdated.Test
 {
     public class NuGetClientTest
     {
+
+        [Theory, MemberData("TestData")]
+        public async void MissingPackagesShouldReturnNull(string packageName, IEnumerable<SemanticVersion> versions)
+        {
+            var client = new MissingPackageNuGetClient();
+
+            var package = await client.GetPackageInfo(packageName);
+
+            Assert.Null(package);
+        }
+
         [Theory, MemberData("TestData")]
         public async void ShouldParseNuGetResponse(string packageName, IEnumerable<SemanticVersion> versions)
         {

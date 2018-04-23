@@ -1,5 +1,6 @@
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
@@ -9,11 +10,15 @@ namespace DotNetOutdated
     {
         protected override async Task<JObject> GetResource(string name)
         {
-            var request = WebRequest.Create($"https://api.nuget.org/v3/registration3/{name}");
-            var ws = await request.GetResponseAsync();
-            using (var sr = new StreamReader(ws.GetResponseStream()))
+            using (var client = new HttpClient())
             {
-                return JObject.Parse(sr.ReadToEnd());
+                var response = await client.GetAsync($"https://api.nuget.org/v3/registration3/{name}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return JObject.Parse(await response.Content.ReadAsStringAsync());
+                }
+                return null;
             }
         }
     }
