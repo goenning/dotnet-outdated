@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace DotNetOutdated
@@ -17,24 +18,28 @@ namespace DotNetOutdated
                 Console.WriteLine("No project file found");
                 return;
             }
-
-            var dependencies = ProjectParser.GetAllDependencies(firstProjectFile);
-            var client = new HttpNuGetClient();  
-            var requests = dependencies.Select(x => client.GetPackageInfo(x.Name));
-            var responses = Task.WhenAll(requests).Result.Where(response => response != null).ToArray();
+            
             var data = new List<DependencyStatus>();
 
-            for (int i = 0; i < responses.Length; i++)
+            using (var httpClient = new HttpClient())
             {
-                var dependency = dependencies.ElementAt(i);
-                var package = responses[i];
-                var status = DependencyStatus.Check(dependency, package);
-
-                if (status.LatestVersion > status.Dependency.CurrentVersion)
+                var dependencies = ProjectParser.GetAllDependencies(firstProjectFile);
+                var client = new HttpNuGetClient(httpClient);
+                var requests = dependencies.Select(x => client.GetPackageInfo(x.Name));
+                var responses = Task.WhenAll(requests).Result.Where(response => response != null).ToArray();
+                for (int i = 0; i < responses.Length; i++)
                 {
-                    data.Add(status);
+                    var dependency = dependencies.ElementAt(i);
+                    var package = responses[i];
+                    var status = DependencyStatus.Check(dependency, package);
+
+                    if (status.LatestVersion > status.Dependency.CurrentVersion)
+                    {
+                        data.Add(status);
+                    }
                 }
             }
+            
 
             data.ToStringTable(
                 new[] { "Package", "Current", "Wanted", "Stable", "Latest"},
