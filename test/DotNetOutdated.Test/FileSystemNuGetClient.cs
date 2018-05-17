@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace DotNetOutdated.Test
 {
-    public class FileSystemNuGetClient : NuGetClient
+    public class FileSystemNuGetClient : V3NuGetClient
     {
         protected override Task<JObject> GetResource(string name)
         {

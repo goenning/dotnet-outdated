@@ -6,20 +6,24 @@ using Newtonsoft.Json.Linq;
 
 namespace DotNetOutdated
 {
-    public class HttpNuGetClient : NuGetClient
+    public class HttpNuGetClient : V3NuGetClient
     {
+        private readonly HttpClient _httpClient;
+
+        public HttpNuGetClient(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
+
         protected override async Task<JObject> GetResource(string name)
         {
-            using (var client = new HttpClient())
-            {
-                var response = await client.GetAsync($"https://api.nuget.org/v3/registration3/{name}");
+            var response = await _httpClient.GetAsync($"https://api.nuget.org/v3/registration3/{name}");
 
-                if (response.IsSuccessStatusCode)
-                {
-                    return JObject.Parse(await response.Content.ReadAsStringAsync());
-                }
-                return null;
+            if (response.IsSuccessStatusCode)
+            {
+                return JObject.Parse(await response.Content.ReadAsStringAsync());
             }
+            return null;
         }
     }
 }

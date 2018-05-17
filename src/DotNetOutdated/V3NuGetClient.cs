@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace DotNetOutdated
 {
-    public abstract class NuGetClient
+    public abstract class V3NuGetClient
     {
         protected abstract Task<JObject> GetResource(string name);
 
