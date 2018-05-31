@@ -24,7 +24,7 @@ namespace DotNetOutdated
             using (var httpClient = new HttpClient())
             {
                 var dependencies = ProjectParser.GetAllDependencies(firstProjectFile);
-                var client = new HttpNuGetClient(httpClient);
+                var client = new V3NugetClient(httpClient);
                 var requests = dependencies.Select(x => client.GetPackageInfo(x.Name));
                 var responses = Task.WhenAll(requests).Result.Where(response => response != null).ToArray();
                 for (int i = 0; i < responses.Length; i++)
@@ -60,6 +60,8 @@ namespace DotNetOutdated
                 a => a.LatestVersion
             );
             Console.ResetColor();
+
+            Console.ReadLine();
         }
     }
 }

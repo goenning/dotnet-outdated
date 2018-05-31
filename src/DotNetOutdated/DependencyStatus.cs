@@ -22,7 +22,7 @@ namespace DotNetOutdated
             status.Dependency = dependency;
             status.Package = package;
 
-            foreach(var version in package.Versions)
+            foreach(var version in package.Versions.OrderByDescending(x => x))
             {
                 if (status.LatestVersion == null)
                     status.LatestVersion = version;

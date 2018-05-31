@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <None Include="sample-projects\**\*" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="nuget-responses\**\*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

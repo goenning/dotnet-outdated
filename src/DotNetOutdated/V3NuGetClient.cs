@@ -1,61 +1,92 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using NuGet.Versioning;
 using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using NuGet.Common;
+using NuGet.Configuration;
+using NuGet.Protocol;
+using NuGet.Protocol.Core.Types;
 
 namespace DotNetOutdated
 {
-    public abstract class V3NuGetClient
+    public class V3NugetClient 
     {
-        protected abstract Task<JObject> GetResource(string name);
+        private readonly HttpClient httpClient;
 
-        public async Task<PackageInfo> GetPackageInfo(string packageName)
+        public V3NugetClient(HttpClient httpClient)
         {
-            var json = await this.GetResource($"{packageName.ToLower()}/index.json");
+            this.httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+        }
 
-            if (json == null)
+        public async Task<PackageInfo> GetPackageInfo(string name)
+        {
+            var logger = new Logger();
+            var providers = new List<Lazy<INuGetResourceProvider>>();
+            providers.AddRange(Repository.Provider.GetCoreV3());
+            var packageSource = new PackageSource("https://api.nuget.org/v3/index.json");
+            var sourceRepository = new SourceRepository(packageSource, providers);
+
+            var packageMetadataResource = await sourceRepository.GetResourceAsync<PackageMetadataResource>();
+            IEnumerable<IPackageSearchMetadata> searchMetadata = await packageMetadataResource.GetMetadataAsync(name, true, true, new SourceCacheContext(), logger, CancellationToken.None);
+
+            if(!searchMetadata.Any())
             {
                 return null;
             }
-            var versions = new List<SemanticVersion>();
 
-            var items = json["items"].AsJEnumerable();
-            if (items[0]["items"] != null)
-            {
-                foreach (var item in items) {
-                    versions.AddRange(this.ExtractVersions(item["items"]));
-                }
-            }
-            else
-            {
-                var requests = items.Select(i => {
-                    var id = i["@id"].ToString();
-                    var resourceName = id.Substring(id.IndexOf(packageName.ToLower()));
-                    return this.GetResource(resourceName);
-                });
-                
-                var pages = await Task.WhenAll(requests);
-                foreach(var page in pages) 
-                    versions.AddRange(this.ExtractVersions(page["items"]));
-            }
+            var versions = searchMetadata.Select(package => package.Identity.Version).ToList();
 
-            versions.Reverse();
-            return new PackageInfo(packageName, versions);
+            return new PackageInfo(name, versions);
         }
 
-        private IEnumerable<SemanticVersion> ExtractVersions(JToken items)
+        public class Logger : ILogger
         {
-            foreach (var item in items)
+            public void Log(LogLevel level, string data)
             {
-                bool listed = Convert.ToBoolean(item["catalogEntry"]["listed"].ToString());
-                if (!listed)
-                    continue;
+            }
 
-                SemanticVersion version;
-                if (SemanticVersion.TryParse(item["catalogEntry"]["version"].ToString(), out version))
-                    yield return version;
+            public void Log(ILogMessage message)
+            {
+            }
+
+            public Task LogAsync(LogLevel level, string data)
+            {
+                return Task.CompletedTask;
+            }
+
+            public Task LogAsync(ILogMessage message)
+            {
+                return Task.CompletedTask;
+            }
+
+            public void LogDebug(string data)
+            {
+            }
+
+            public void LogError(string data)
+            {
+            }
+
+            public void LogInformation(string data)
+            {
+            }
+
+            public void LogInformationSummary(string data)
+            {
+            }
+
+            public void LogMinimal(string data)
+            {
+            }
+
+            public void LogVerbose(string data)
+            {
+            }
+
+            public void LogWarning(string data)
+            {
             }
         }
     }
