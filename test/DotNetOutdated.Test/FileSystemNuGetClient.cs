@@ -6,9 +6,11 @@ namespace DotNetOutdated.Test
 {
     public class FileSystemNuGetClient : V3NuGetClient
     {
-        protected override Task<JObject> GetResource(string name)
+        protected override async Task<JObject> GetResource(string name)
         {
-            return Task.Run(() => JObject.Parse(File.ReadAllText($"./nuget-responses/{name}")));
+            string content = await File.ReadAllTextAsync($"./nuget-responses/{name}");
+
+            return JObject.Parse(content);
         }
     }
 }
